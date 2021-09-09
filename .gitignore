@@ -1,0 +1,4 @@
+# ignore the directory __pycache__/ generated when a python module is used
+__pycache__/
+# no .pyc files generated when a python module is used
+*.pyc
