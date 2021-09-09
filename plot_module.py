@@ -13,14 +13,10 @@ import os
 #===========================================================
 #===========================================================
 
-def fig_init(axs_rows, axs_cols, share_x_axis, share_y_axis, xlabels, ylabels, titles, suptitle_str, fig_num, fig_pos):
+def fig_init(axs_rows, axs_cols, share_x_axis, share_y_axis, xlabels, ylabels, titles, suptitle_str, fig_num, fig_pos, fig_size):
     if len(xlabels)!=axs_rows*axs_cols or len(ylabels)!=axs_rows*axs_cols or len(titles)!=axs_rows*axs_cols:
         print("Error : mismatch in # of (xlabels/ylabels/titles)") ; exit()
-    myfigure_dpi = 100
-    fw = 1920.0/float( myfigure_dpi )
-    fh = 1080.0/float( myfigure_dpi )
-    f_size = min(fw,fh)
-    fig, axs = plt.subplots(nrows=axs_rows, ncols=axs_cols, sharex=share_x_axis, sharey=share_y_axis, num=fig_num, figsize=( f_size, f_size ) )
+    fig, axs = plt.subplots(nrows=axs_rows, ncols=axs_cols, sharex=share_x_axis, sharey=share_y_axis, num=fig_num, figsize=( fig_size[0], fig_size[1] ) )
     fig.canvas.manager.window.move(fig_pos,0)
     #
     if axs_rows==1:
