@@ -25,6 +25,9 @@ def set_fig_elements_size():
     plt.rcParams['figure.titlesize'] = 20
 
 def fig_init(axs_rows, axs_cols, share_x_axis, share_y_axis, xlabels, ylabels, titles, suptitle_str, fig_num, fig_pos, fig_size):
+    if len(fig_size)==0:
+        fw,fh,dpi = get_figure_dimensions(1920,1080)
+        fig_size = [fw/2,fh]
     set_fig_elements_size()
     if len(xlabels)!=axs_rows*axs_cols or len(ylabels)!=axs_rows*axs_cols or len(titles)!=axs_rows*axs_cols:
         print("Error : mismatch in # of (xlabels/ylabels/titles)") ; exit()
