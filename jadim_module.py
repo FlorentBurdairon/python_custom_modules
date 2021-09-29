@@ -61,7 +61,19 @@ def upper_lower_bounds(node_type, ni, nj):
     return xlb, xub, ylb, yub
 #
 #--------------------------------------------------------------------
-def read_geom_file(filepath, node_type):
+def check_node_type(node_type):
+    print(f"Node type selected : {node_type}")
+    list_of_node_types = ["vertex", "velocity_u", "velocity_v", "pressure"]
+    if not(node_type in list_of_node_types):
+        generic_module.throw_error_with_function_name()
+        print(f">>> '{node_type}' is not a valid type of node (list of valid nodes : {[list_of_node_types[i] for i in range(4)]}) - end of program")
+        exit()
+
+def read_geom_file(dirname, casename, node_type):
+    check_node_type(node_type)
+    print(f"Location of the geom file : {dirname}")
+    filename = casename + ".geom"
+    filepath = dirname + filename
     with open(filepath) as myfile:
         read_data = myfile.readlines()
     #print(read_data[0])
@@ -81,25 +93,12 @@ def read_geom_file(filepath, node_type):
 
 def plot_geom(coord_x, coord_y, ni, nj, node_type):
     fig, axs = plot_module.fig_init(1,1, False, False, [r'$x$'], [r'$y$'], [f"Node type : {node_type}"], "", 1, 0, [])
-    #
     for j in range(nj):
         axs.plot(coord_x[j,:], coord_y[j,:], 'k.-', linewidth=0.5, markerfacecolor='none', markersize=5)
     for i in range(ni):
         axs.plot(coord_x[:,i], coord_y[:,i], 'k.-', linewidth=0.5, markerfacecolor='none', markersize=5)
-    #axs.plot(coord_x[0,:], coord_y[0,:], 'r.', linewidth=0.5, markerfacecolor='none', markersize=5)
 
 def read_and_plot_geom(dirname, casename, node_type):
-    print(f"Location of the geom file : {dirname}")
-    filename = casename + ".geom"
-    filepath = dirname + filename
-    #
-    print(f"Node type selected : {node_type}")
-    list_of_node_types = ["vertex", "velocity_u", "velocity_v", "pressure"]
-    if not(node_type in list_of_node_types):
-        generic_module.throw_error_with_function_name()
-        print(f">>> '{node_type}' is not a valid type of node (list of valid nodes : {[list_of_node_types[i] for i in range(4)]}) - end of program")
-        exit()
-    #
     coord_x, coord_y, ni, nj = read_geom_file(filepath, node_type)
     plot_geom(coord_x, coord_y, ni, nj, node_type)
 
