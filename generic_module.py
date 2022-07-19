@@ -5,15 +5,21 @@
 
 # python librairies
 import os
-from termcolor import colored
 import inspect
 import numpy as np
 
 #================================================================================================
 #================================================================================================
 
-def print_colored_arrow_with ( section_number ):
-    print(colored("------> %u) " % section_number, "green"), end='')
+def nombre_premier(N, nlim):
+    l=[print(f"{n}".rjust(3) + f" est diviseur de {N} : {N}/{n} = {int(N/n)}") for n in range(2,nlim+1) if N/n==int(N/n)]
+    if nlim>=N and len(l)==1:
+        print(f"=====> {N} est un nombre premier !!!")
+    if len(l)==0:
+        print(f"{N} n'a pas de diviseur dans l'intervalle recherche")
+
+#def print_colored_arrow_with ( section_number ):
+#    print(colored("------> %u) " % section_number, "green"), end='')
 
 def check_if_string_is_an_integer( mystring ):
     try:
@@ -52,3 +58,14 @@ def convert_string_to_numpy_array(mystring):
         numpy_array[i] = float(nums[i])
     return numpy_array
 
+def convertir_en_secondes(heure,minute,seconde):
+    return heure*3600 + minute*60 + seconde
+
+def convertir_en_minutes(heure,minute,seconde):
+    return heure/60 + minute + seconde/60
+
+def convertir_en_heures(heure,minute,seconde):
+    return heure + minute/60 + seconde/3600
+
+def convertir_en_jours(heure,minute,seconde):
+    return convertir_en_heures(heure,minute,seconde)/24
