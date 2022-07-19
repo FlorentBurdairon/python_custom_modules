@@ -7,7 +7,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
-from termcolor import colored
 import os
 import generic_module
 import plot_module

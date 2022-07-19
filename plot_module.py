@@ -7,7 +7,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
-from termcolor import colored
 import os
 
 #===========================================================
@@ -27,11 +26,12 @@ def set_fig_elements_size():
 def fig_init(axs_rows, axs_cols, share_x_axis, share_y_axis, xlabels, ylabels, titles, suptitle_str, fig_num, fig_pos, fig_size):
     if len(fig_size)==0:
         fw,fh,dpi = get_figure_dimensions(1920,1080)
-        fig_size = [fw/2,fh]
+        fs = min(fw,fh)
+        fig_size = [fs/1.333,fs]
     set_fig_elements_size()
     if len(xlabels)!=axs_rows*axs_cols or len(ylabels)!=axs_rows*axs_cols or len(titles)!=axs_rows*axs_cols:
         print("Error : mismatch in # of (xlabels/ylabels/titles)") ; exit()
-    fig, axs = plt.subplots(nrows=axs_rows, ncols=axs_cols, sharex=share_x_axis, sharey=share_y_axis, num=fig_num, figsize=( fig_size[0], fig_size[1] ), clear=True)
+    fig, axs = plt.subplots(nrows=axs_rows, ncols=axs_cols, sharex=share_x_axis, sharey=share_y_axis, num=fig_num, figsize=( fig_size[0], fig_size[1] ), clear=True, constrained_layout=True)
     fig.canvas.manager.window.move(fig_pos,0)
     #
     if axs_rows*axs_cols==1:
@@ -39,7 +39,8 @@ def fig_init(axs_rows, axs_cols, share_x_axis, share_y_axis, xlabels, ylabels, t
         axs.grid()
         axs.set_xlabel(xlabels[0])
         axs.set_ylabel(ylabels[0])
-        axs.set_title(titles[0], y=1.01,wrap=True)
+        if len(titles[0]) > 0:
+            axs.set_title(titles[0], y=1.01,wrap=True)
     elif axs_rows==1:
         for j in range(axs_cols):
             axs[j].cla()
