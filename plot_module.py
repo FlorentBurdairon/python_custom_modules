@@ -16,18 +16,23 @@ def get_figure_dimensions(fw_pixels, fh_pixels):
     myfigure_dpi = 100
     figure_width = fw_pixels/float( myfigure_dpi )
     figure_height = fh_pixels/float( myfigure_dpi )
+    #print(figure_width, figure_height, myfigure_dpi)
     return figure_width, figure_height, myfigure_dpi
 
 def set_fig_elements_size():
-    plt.rcParams['axes.labelsize'] = 15
+    plt.rcParams['axes.labelsize'] = 25
     plt.rcParams['axes.titlesize'] = 15
     plt.rcParams['figure.titlesize'] = 20
+    plt.rcParams['xtick.labelsize'] = 12
+    plt.rcParams['ytick.labelsize'] = 12
 
 def fig_init(axs_rows, axs_cols, share_x_axis, share_y_axis, xlabels, ylabels, titles, suptitle_str, fig_num, fig_pos, fig_size):
     if len(fig_size)==0:
         fw,fh,dpi = get_figure_dimensions(1920,1080)
-        fs = min(fw,fh)
-        fig_size = [fs/1.333,fs]
+        #fs = min(fw,fh)
+        fs = fh * 20./13.
+        fig_size = [fs, fh] # [fs/1.333,fs]
+    #print(fig_size)
     set_fig_elements_size()
     if len(xlabels)!=axs_rows*axs_cols or len(ylabels)!=axs_rows*axs_cols or len(titles)!=axs_rows*axs_cols:
         print("Error : mismatch in # of (xlabels/ylabels/titles)") ; exit()
