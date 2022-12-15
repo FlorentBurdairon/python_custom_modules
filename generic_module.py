@@ -77,3 +77,9 @@ def human_readable_time(secondes):
     print(f"{secondes:.0f} s = {h}h {m}min {s}s")
     return [h,m,s]
 
+def find_indices(list_to_check, item_to_find):
+    indices = []
+    for idx, value in enumerate(list_to_check):
+        if value == item_to_find:
+            indices.append(idx)
+    return indices
