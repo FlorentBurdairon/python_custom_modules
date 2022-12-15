@@ -28,12 +28,12 @@ def check_if_string_is_an_integer( mystring ):
     except ValueError:
         return False
 
-def extract_relative_path_from_absolute_path( directory_path ):
+def extract_relative_path_from_absolute_path( directory_path, position=-1 ):
     list_of_successive_directories = directory_path.split('/') # split based on the directory separator '/'
     #print(f"{list_of_successive_directories}")
     list_of_successive_directories = list(filter(None, list_of_successive_directories)) # remove empty strings
     #print(f"{list_of_successive_directories}")
-    relative_path = list_of_successive_directories[-1]
+    relative_path = list_of_successive_directories[position]
     return relative_path
 
 def get_dat_files_from_directory_and_sort_them ( mydirectory ):
