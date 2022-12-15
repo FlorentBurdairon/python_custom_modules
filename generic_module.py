@@ -69,3 +69,11 @@ def convertir_en_heures(heure,minute,seconde):
 
 def convertir_en_jours(heure,minute,seconde):
     return convertir_en_heures(heure,minute,seconde)/24
+
+def human_readable_time(secondes):
+    h = int(secondes/3600)
+    m = int((secondes-h*3600)/60)
+    s = int(secondes - h*3600 - m*60)
+    print(f"{secondes:.0f} s = {h}h {m}min {s}s")
+    return [h,m,s]
+
