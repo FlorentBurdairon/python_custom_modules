@@ -13,10 +13,10 @@ import plot_module
 
 #===========================================================
 #===========================================================
-def convert_string(mystring, data_type):
+def convert_string(mystring, data_type, n_elements):
     nums = mystring.split()
     #print(nums)
-    numpy_array = np.zeros((3), dtype=data_type)
+    numpy_array = np.zeros((n_elements), dtype=data_type)
     for el in range(len(nums)):
         numpy_array[el] = nums[el]
     return numpy_array
