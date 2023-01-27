@@ -37,8 +37,12 @@ def allocate_label(labels, nrows, ncols):
     if labels is None:
         labels = [""]*nrows*ncols
     else:
-        if len(xlabels)!=axs_rows*axs_cols or len(ylabels)!=axs_rows*axs_cols or len(titles)!=axs_rows*axs_cols:
-            print("Error : mismatch in # of (xlabels/ylabels/titles)") ; exit()
+        if nrows*ncols==1:
+            if isinstance(labels, str):
+                labels = [labels]
+        else:
+            if len(labels)!=nrows*ncols:
+                print("Error : mismatch in # of (xlabels/ylabels/titles)") ; exit()
     return labels
 
 def allocate_fig_num(fig_num):
