@@ -10,6 +10,7 @@ from matplotlib.animation import FuncAnimation
 import os
 import generic_module
 import plot_module
+import math
 
 #===========================================================
 #===========================================================
@@ -23,39 +24,43 @@ def convert_string(mystring, data_type, n_elements):
 #--------------------------------------------------------------------
 def get_data_in_shape(field_string, ni, nj):
     field = np.zeros((ni*nj))
-    for el in range(len(field_string)):
-        field_local_array = convert_string(field_string[el], float)
-        for i in range(3):
-            field[3*el+i] = field_local_array[i]
-    final_field = np.reshape(field, (nj,ni))
+    for iline in range(len(field_string)):
+        current_string = field_string[iline]
+        elements_nb = len(current_string.split())
+        field_local_array = convert_string(current_string, float, elements_nb)
+        for i in range(elements_nb):
+            field[3*iline+i] = field_local_array[i]
+    final_field = np.reshape(field, (ni,nj), order='F')
     return final_field
+#
+#--------------------------------------------------------------------
+def compute_line_number(ni,nj):
+    if ni*nj%3==0:
+        line_nb = int(ni*nj/3)
+    else:
+        line_nb = math.ceil(ni*nj/3)
+    #print(f"Number of line per field : {line_nb}")
+    return line_nb
 #
 #--------------------------------------------------------------------
 def upper_lower_bounds(node_type, ni, nj):
     if node_type == "vertex":
-        xlb = 3
-        xub = int(ni*nj/3)+2
-        ylb = int(ni*nj/3)+3
-        yub = 2*int(ni*nj/3)+2
+        index_type = 0
     elif node_type == "velocity_u":
-        xlb = 2*int(ni*nj/3)+3
-        xub = 3*int(ni*nj/3)+2
-        ylb = 3*int(ni*nj/3)+3
-        yub = 4*int(ni*nj/3)+2
+        index_type = 1
     elif node_type == "velocity_v":
-        xlb = 4*int(ni*nj/3)+3
-        xub = 5*int(ni*nj/3)+2
-        ylb = 5*int(ni*nj/3)+3
-        yub = 6*int(ni*nj/3)+2
+        index_type = 2
     elif node_type == "pressure":
-        xlb = 6*int(ni*nj/3)+3
-        xub = 7*int(ni*nj/3)+2
-        ylb = 7*int(ni*nj/3)+3
-        yub = 8*int(ni*nj/3)+2
+        index_type = 3
     else:
         generic_module.throw_error_with_function_name()
         print(f">>> node type {node_type} is unknown - end of program")
         exit()
+    line_nb = compute_line_number(ni,nj)
+    xlb = index_type * 2 * line_nb + 3
+    xub = xlb-1 + line_nb
+    ylb = xub+1
+    yub = ylb-1 + line_nb
     xlb = xlb-1 ; xub = xub-1 ; ylb = ylb-1 ; yub = yub-1 # substract 1 because of the way python count
     return xlb, xub, ylb, yub
 #
@@ -76,7 +81,7 @@ def read_geom_file(dirname, casename, node_type):
     with open(filepath) as myfile:
         read_data = myfile.readlines()
     #print(read_data[0])
-    dimensions = convert_string(read_data[0], int)
+    dimensions = convert_string(read_data[0], int, 3)
     #print(dimensions)
     ni = dimensions[0]
     nj = dimensions[1]
