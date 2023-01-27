@@ -7,6 +7,7 @@
 import os
 import inspect
 import numpy as np
+import sys
 
 #================================================================================================
 #================================================================================================
@@ -83,3 +84,12 @@ def find_indices(list_to_check, item_to_find):
         if value == item_to_find:
             indices.append(idx)
     return indices
+
+def progressbar(n,nmax):
+    nbin = 100 / nmax
+    sys.stdout.write('\r')
+    # the exact output you're looking for:
+    sys.stdout.write(f"[%-100s] %d%%" % ('='*int(nbin*n), nbin*n))
+    sys.stdout.flush()
+    if n==nmax: print()
+    #sleep(0.01)
