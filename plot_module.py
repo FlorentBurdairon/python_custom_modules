@@ -53,7 +53,7 @@ def allocate_fig_num(fig_num):
             fig_num+=1
     return fig_num
 
-def fig_init(axs_rows=1, axs_cols=1, share_x_axis=False, share_y_axis=False, xlabels=None, ylabels=None, titles=None, suptitle_str="", fig_num=None, fig_pos=0, fig_size=None):
+def fig_init(axs_rows=1, axs_cols=1, share_x_axis=False, share_y_axis=False, xlabels=None, ylabels=None, titles=None, suptitle_str="", fig_num=None, fig_pos=0, fig_size=None, x_rotation="horizontal", y_rotation="vertical"):
     #
     xlabels = allocate_label(xlabels, axs_rows, axs_cols)
     ylabels = allocate_label(ylabels, axs_rows, axs_cols)
@@ -70,30 +70,30 @@ def fig_init(axs_rows=1, axs_cols=1, share_x_axis=False, share_y_axis=False, xla
     if axs_rows*axs_cols==1:
         axs.cla()
         axs.grid()
-        axs.set_xlabel(xlabels[0])
-        axs.set_ylabel(ylabels[0])
+        axs.set_xlabel(xlabels[0], rotation=x_rotation, va='top')
+        axs.set_ylabel(ylabels[0], rotation=y_rotation, ha='right')
         if len(titles[0]) > 0:
             axs.set_title(titles[0], y=1.01,wrap=True)
     elif axs_rows==1:
         for j in range(axs_cols):
             axs[j].cla()
             axs[j].grid()
-            axs[j].set_xlabel(xlabels[j])
-            axs[j].set_ylabel(ylabels[j])
+            axs[j].set_xlabel(xlabels[j], rotation=x_rotation, va='top')
+            axs[j].set_ylabel(ylabels[j], rotation=y_rotation, ha='right')
             axs[j].set_title(titles[j], y=1.01)
     elif axs_cols==1:
         for i in range(axs_rows):
             axs[i].cla()
             axs[i].grid()
-            axs[i].set_xlabel(xlabels[i])
-            axs[i].set_ylabel(ylabels[i])
+            axs[i].set_xlabel(xlabels[i], rotation=x_rotation, va='top')
+            axs[i].set_ylabel(ylabels[i], rotation=y_rotation, ha='right')
             axs[i].set_title(titles[i], y=1.01)
     else:
         for i in range(axs_rows):
             for j in range(axs_cols):
                 axs[i,j].cla()
                 axs[i,j].grid()
-                axs[i,j].set_xlabel(xlabels[i*axs_cols+j])
-                axs[i,j].set_ylabel(ylabels[i*axs_cols+j])
+                axs[i,j].set_xlabel(xlabels[i*axs_cols+j], rotation=x_rotation, va='top')
+                axs[i,j].set_ylabel(ylabels[i*axs_cols+j], rotation=y_rotation, ha='right')
                 axs[i,j].set_title(titles[i*axs_cols+j])#, y=1.01)
     return fig, axs
