@@ -8,9 +8,22 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 import os
+import tkinter
 
 #===========================================================
 #===========================================================
+
+
+def get_screen_dimensions():
+    root = tkinter.Tk()
+    screenwidth = root.winfo_screenwidth()
+    screenheight = root.winfo_screenheight()
+    pixel_per_inch = root.winfo_fpixels('1i') #dpi
+    root.destroy()
+    #
+    screenwidth_inch = screenwidth_pixel/float( pixel_per_inch )
+    screenheight_inch = screenheight_pixel/float( pixel_per_inch )
+    return screenwidth_inch, screenheight_inch, pixel_per_inch
 
 def get_figure_dimensions(fw_pixels, fh_pixels):
     myfigure_dpi = 100
@@ -27,10 +40,12 @@ def set_fig_and_labels_size(fig_size):
     plt.rcParams['ytick.labelsize'] = 12
     #
     if fig_size is None or len(fig_size)==0:
-        fw,fh,dpi = get_figure_dimensions(1920,1080)
+        #fw,fh,dpi = get_figure_dimensions(1920,1080)
+        sw, sh, dpi = get_screen_dimensions()
         #fs = min(fw,fh)
-        fs = fh * 20./13.
-        fig_size = [fs, fh] # [fs/1.333,fs]
+        fw = sh * 20./13.
+        fh = sh / 2.
+        fig_size = [fw, fh]
     return fig_size
 
 def allocate_label(labels, nrows, ncols):
