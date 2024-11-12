@@ -32,6 +32,20 @@ def read_input_data(meshpath, solutpath):
     return base
 #
 #================================================
+def extract_skin_data(base, skindatapath):
+    print("Extract skin data")
+    skin_base = base[base.families['Patches']]
+    if len(skindatapath)>0:
+        modgen.check_ispath(skindatapath)
+        writer = ant.Writer('bin_vtk')
+        writer['base'] = skin_base # give the base to write
+        writer['filename'] = os.path.join(skindatapath, 'Patches_<zone>') # give the name of the output file to write
+        print("Extracted base = ", skin_base)
+        print("Writing to output files", writer['filename'])
+        writer.dump() # write the output file
+    return skin_base
+#
+#================================================
 def domain_reduction(base):
     print("Reduce the size of the computational domain")
     clip = ant.Treatment('threshold')
