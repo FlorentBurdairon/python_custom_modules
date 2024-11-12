@@ -46,15 +46,15 @@ def extract_skin_data(base, skindatapath):
     return skin_base
 #
 #================================================
-def domain_reduction(base):
+def domain_reduction(base, limits):
     print("Reduce the size of the computational domain")
     clip = ant.Treatment('threshold')
     clip['base'] = base
     clip['variables'] = ['x', 'y', 'z'] #  variables on which the threshold will be applied
-    a = 0.35
-    x0 = -a ; x1 = a
-    y0 = -a ; y1 = a
-    z0 = -a ; z1 = a
+    #a = 0.35
+    x0 = limits[0,0] ; x1 = limits[0,1]
+    y0 = limits[1,0] ; y1 = limits[1,1]
+    z0 = limits[2,0] ; z1 = limits[2,1]
     clip['threshold'] = [(x0, x1), (y0, y1), (z0, z1)] # boundaries of the intervals for the threshold to apply
     clip_base = clip.execute()
     print(f" ---> # of points on the original base = {base.grid_points:e}")
