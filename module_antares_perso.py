@@ -4,6 +4,7 @@ import numpy as np
 import antares as ant
 import matplotlib.pyplot as plt
 import time
+import module_generic as modgen
 #
 #================================================
 def read_input_data(meshpath, solutpath):
@@ -73,17 +74,15 @@ def azimuthal_average(base):
     return azim_base
 #
 #================================================
-def write_data(base, dirname, solutfile, prefix):
+def write_data(base, postpath, datafile, prefix):
     print("Write the extracted data for visualisation")
     # Define location
-    outdir = os.path.join(dirname, "POST")
-    if not os.path.isdir(outdir):
-        os.makedirs(outdir)
+    modgen.check_ispath(postpath)
     # Write the base in a VTK binary format file to visualize the skin data extracted in Paraview
     writer = ant.Writer('hdf_antares')
     writer['base'] = base # give the base to write
-    outfilename = prefix + solutfile[:-3]
-    outfilepath = os.path.join(outdir, outfilename)
+    outfilename = prefix + datafile[:-3]
+    outfilepath = os.path.join(postpath, outfilename)
     writer['filename'] = outfilepath
     print(" ---> Writing to output file", writer['filename'])
     writer.dump() # write the output file
