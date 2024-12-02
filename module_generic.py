@@ -8,6 +8,7 @@ import os
 import inspect
 import numpy as np
 import sys
+import csv
 
 #================================================================================================
 #================================================================================================
@@ -114,3 +115,30 @@ def progressbar(n,nmax):
     sys.stdout.flush()
     if n==nmax: print()
     #sleep(0.01)
+#
+#================================================
+def read_data(dirname, filename, delimiter, head='', tail=''):
+    filepath = os.path.join(dirname, filename)
+    with open(filepath) as file:
+        reader = csv.reader(file, delimiter=delimiter)
+        rows = []
+        for row in reader:
+            cleanrow = []
+            for l in row:
+                if len(l)>0:
+                    cleanrow.append(l)
+            if len(cleanrow)>0:
+                rows.append(cleanrow)
+    return rows
+#
+#================================================
+def string_list2numpy_array(list_array):
+    N_elems = len(list_array)
+    np_array = np.zeros(N_elems)
+    for n in range(N_elems):
+        element = list_array[n]
+        try:
+            np_array[n] = float(element)
+        except ValueError:
+            print(f"ERROR: can't parse element {element}")
+    return np_array
