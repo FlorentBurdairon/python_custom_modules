@@ -6,11 +6,9 @@
 # python librairies
 import os
 import tkinter
-import sys
 import numpy as np
 import matplotlib
-if sys.platform == "darwin":
-    matplotlib.use("tkagg")
+matplotlib.use("tkagg")
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
@@ -82,11 +80,8 @@ def fig_init(axs_rows=1, axs_cols=1, share_x_axis=False, share_y_axis=False, xla
     fig_size = set_fig_and_labels_size(fig_size)
     #
     fig, axs = plt.subplots(nrows=axs_rows, ncols=axs_cols, sharex=share_x_axis, sharey=share_y_axis, num=fig_num, figsize=( fig_size[0], fig_size[1] ), clear=True, constrained_layout=True)
-    if sys.platform == "darwin":
-        figpos = f"+{fig_pos:d}+{0:d}"
-        fig.canvas.manager.window.wm_geometry(figpos)
-    else:
-        fig.canvas.manager.window.move(fig_pos,0)
+    figpos = f"+{fig_pos:d}+{0:d}"
+    fig.canvas.manager.window.wm_geometry(figpos)
     #
     plt.suptitle(suptitle_str)
     #
