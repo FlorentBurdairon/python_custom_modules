@@ -14,13 +14,13 @@ import csv
 #================================================================================================
 #
 #================================================
-def gather_path(path_elements, checkpath):
+def gather_path(path_elements, ischeckpath):
     outpath = ''
     for element in path_elements:
-        outpath = os.path.join(element)
-    if checkpath:
-        isdir = os.path.isdir(checkpath)
-        isfile = os.path.isfile(checkpath)
+        outpath = os.path.join(outpath, element)
+    if ischeckpath:
+        isdir = os.path.isdir(outpath)
+        isfile = os.path.isfile(outpath)
         if not(isfile or isdir):
             print(f"WARNING: can't find {checkpath}! Ending now...") ; exit()
     return outpath
