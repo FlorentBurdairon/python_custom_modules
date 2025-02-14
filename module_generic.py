@@ -154,3 +154,12 @@ def string_list2numpy_array(list_array):
         except ValueError:
             print(f"ERROR: can't parse element {element}")
     return np_array
+#
+#================================================
+def from_xdmf(xdmfpath, tagname):
+    # requires from xml.dom import minidom
+    doc = minidom.parse(xdmfpath)
+    elements = doc.getElementsByTagName(tagname)
+    value = elements[0].getAttribute("Value")
+    return float(value)
+
