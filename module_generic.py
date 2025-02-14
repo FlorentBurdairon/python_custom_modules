@@ -22,7 +22,7 @@ def gather_path(path_elements, ischeckpath):
         isdir = os.path.isdir(outpath)
         isfile = os.path.isfile(outpath)
         if not(isfile or isdir):
-            print(f"WARNING: can't find {checkpath}! Ending now...") ; exit()
+            print(f"WARNING: can't find {outpath}! Ending now...") ; exit()
     return outpath
 #
 #================================================
